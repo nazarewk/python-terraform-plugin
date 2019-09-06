@@ -1,0 +1,6 @@
+# it is used by pip-tools ( https://pypi.org/project/pip-tools ):
+# $ pip install --user pip-tools
+# $ pip-compile --upgrade --output-file requirements.txt requirements.in
+
+grpcio-tools
+requests
