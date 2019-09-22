@@ -2,6 +2,7 @@ import logging
 from typing import Any
 
 from terraform_provider import plugin
+from terraform_provider.provider import PrimitiveType
 from terraform_provider.tfplugin51_pb2 import GetProviderSchema, Schema
 
 log = logging.getLogger(__name__)
@@ -20,7 +21,12 @@ class ExampleProvider(plugin.ProviderBase):
             resource_schemas={
                 'example_example': Schema(
                     block=Schema.Block(
-                        attributes=[]
+                        attributes=[
+                            Schema.Attribute(
+                                name='computed_string',
+                                type=PrimitiveType.String.value,
+                            )
+                        ]
                     )
                 )
             }
