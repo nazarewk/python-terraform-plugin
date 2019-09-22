@@ -1,5 +1,6 @@
 import os
 import shlex
+import shutil
 import sys
 import textwrap
 from pathlib import Path
@@ -12,7 +13,7 @@ script_path = Path(__file__).absolute()
 repo_dir = script_path.parent
 src_dir: Path = repo_dir / 'src'
 package_path: Path = src_dir / 'terraform_provider'
-requirements_path: Path = repo_dir / 'requirements.txt'
+requirements_path: Path = repo_dir / 'requirements-dev.txt'
 env_path: Path = repo_dir / '.venv'
 
 pip_install_command = ('pip', 'install', '-U', 'pip', 'setuptools', '-r', requirements_path)
@@ -114,6 +115,10 @@ def ensure_protobuf(filename='tfplugin5.1.proto'):
         f'--grpc_python_out=.',
         f'{proto_path.relative_to(src_dir)}',
     ]
+    gen_mypy = shutil.which('protoc-gen-mypy')
+    if gen_mypy:
+        protoc_args.insert(1, f'--mypy_out=.')
+        protoc_args.insert(1, f'--plugin=protoc-gen-mypy={gen_mypy}')
     info(f'executing: protoc {" ".join(protoc_args)}')
     protoc.main(protoc_args)
     os.chdir(cwd)

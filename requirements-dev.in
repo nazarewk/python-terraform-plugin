@@ -1,0 +1,7 @@
+# it is used by pip-tools ( https://pypi.org/project/pip-tools ):
+# $ pip install --user pip-tools
+# $ pip-compile --upgrade --output-file requirements-dev.txt requirements-dev.in
+
+-r requirements.in
+mypy
+mypy-protobuf

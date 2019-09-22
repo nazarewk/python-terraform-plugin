@@ -1,2 +1,2 @@
-# terraform-provider-python
-PoC terraform provider in Python
+# python-terraform-provider
+PoC terraform provider library for Python
