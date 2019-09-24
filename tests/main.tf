@@ -1,1 +1,0 @@
-resource "example_example" "qwe" {}

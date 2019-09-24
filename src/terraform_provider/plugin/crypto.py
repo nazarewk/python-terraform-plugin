@@ -9,7 +9,7 @@ from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePrivateKeyWithSerialization
 from cryptography.x509 import Certificate, load_der_x509_certificate
 
-from terraform_provider.plugin import PluginCertKey
+from terraform_provider.plugin.constants import PluginCertKey
 
 
 def utcnow():

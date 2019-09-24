@@ -210,5 +210,5 @@ dmypy.json
 .pyre/
 
 .terraform/
-*.tfstate
+*.tfstate*
 .idea/

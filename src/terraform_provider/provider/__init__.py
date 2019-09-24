@@ -1,6 +1,8 @@
 import enum
+from typing import Any
 
 from .. import tfplugin51_pb2_grpc
+from ..tfplugin51_pb2 import PrepareProviderConfig, Configure
 
 
 class Type(enum.IntEnum):
@@ -28,4 +30,16 @@ class PrimitiveType(enum.Enum):
 
 
 class ProviderBase(tfplugin51_pb2_grpc.ProviderServicer):
-    pass
+    def Configure(
+            self,
+            request: Configure.Request,
+            context: Any
+    ) -> Configure.Response:
+        return Configure.Response()
+
+    def PrepareProviderConfig(
+            self,
+            request: PrepareProviderConfig.Request,
+            context: Any
+    ) -> PrepareProviderConfig.Response:
+        return PrepareProviderConfig.Response()

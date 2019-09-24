@@ -2,6 +2,7 @@
 # $ pip install --user pip-tools
 # $ pip-compile --upgrade --output-file requirements.txt requirements.in
 
-grpcio-tools
-requests
 cryptography
+grpcio-tools
+msgpack
+requests

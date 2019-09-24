@@ -11,18 +11,19 @@ from . import constants, crypto
 
 
 def start_plugin(path: Path, secure=False):
-    private_key, private_key_bytes = crypto.generate_private_key()
-    certificate = crypto.generate_certificate(private_key)
-    certificate_bytes: bytes = certificate.public_bytes(serialization.Encoding.PEM)
-
+    """
+    SSL fails due to https://github.com/grpc/grpc/issues/6722
+    """
     env = {
         constants.MagicCookieKey: constants.MagicCookieValue,
         constants.PluginProtocolVersionKey: str(constants.DefaultProtocolVersion),
-        constants.PluginCertKey: certificate_bytes.decode(),
     }
 
-    if not secure:
-        del env[constants.PluginCertKey]
+    if secure:
+        private_key, private_key_bytes = crypto.generate_private_key()
+        certificate = crypto.generate_certificate(private_key)
+        certificate_bytes: bytes = certificate.public_bytes(serialization.Encoding.PEM)
+        env[constants.PluginCertKey] = certificate_bytes.decode()
 
     path_str = str(path.absolute())
     process = subprocess.Popen([
@@ -44,9 +45,8 @@ def start_plugin(path: Path, secure=False):
     assert int(protocol_version) == constants.DefaultProtocolVersion
     assert protocol_type == 'grpc'
     channel_address = f'{network_type}:{network_address}'
-    if not secure:
-        channel = grpc.insecure_channel(channel_address)
-    else:
+
+    if secure:
         server_certificate_base64, *_ = remainder
         # add missing padding
         server_certificate_base64 += '=' * (len(server_certificate_base64) % 4)
@@ -62,6 +62,8 @@ def start_plugin(path: Path, secure=False):
             certificate_chain=certificate_bytes,
         )
         channel = grpc.secure_channel(channel_address, credentials=credentials)
+    else:
+        channel = grpc.insecure_channel(channel_address)
 
     stub = ProviderStub(channel=channel)
     return process, stub
