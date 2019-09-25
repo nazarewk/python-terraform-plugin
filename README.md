@@ -15,3 +15,15 @@ To run example provider demonstrating capabilities:
     cd terraform-provider-example
     terraform init
     terraform apply
+    
+# TODO
+
+- [x] `terraform provider schemas -json`
+- [x] `terraform apply` with Python `data_source`
+- [x] `terraform apply` with Python `resource`
+- [ ] create Pythonic interface to `data_sources` and `resources`:
+    - [ ] `Schema` generation from Python class
+    - [ ] mapping of GRPC methods to Python class
+- [ ] provisioner implementation in Python, currently out of scope
+- [ ] determine whether faster execution time is possible at all (Terraform
+    spawns a new process multiple times during execution),

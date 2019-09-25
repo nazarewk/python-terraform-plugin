@@ -1,8 +1,11 @@
 import enum
 from typing import Any
 
+from grpc._server import _Server
+
+from terraform_provider.tfplugin51_pb2 import ValidateResourceTypeConfig, Stop
 from .. import tfplugin51_pb2_grpc
-from ..tfplugin51_pb2 import PrepareProviderConfig, Configure
+from ..tfplugin51_pb2 import PrepareProviderConfig, Configure, ValidateDataSourceConfig
 
 
 class Type(enum.IntEnum):
@@ -30,6 +33,12 @@ class PrimitiveType(enum.Enum):
 
 
 class ProviderBase(tfplugin51_pb2_grpc.ProviderServicer):
+    def __init__(self, server: _Server = None):
+        self.server = server
+
+    def bind(self, server: _Server = None):
+        self.server = server
+
     def Configure(
             self,
             request: Configure.Request,
@@ -43,3 +52,16 @@ class ProviderBase(tfplugin51_pb2_grpc.ProviderServicer):
             context: Any
     ) -> PrepareProviderConfig.Response:
         return PrepareProviderConfig.Response()
+
+    def ValidateDataSourceConfig(self, request: ValidateDataSourceConfig.Request,
+                                 context: Any) -> ValidateDataSourceConfig.Response:
+        return ValidateDataSourceConfig.Response()
+
+    def ValidateResourceTypeConfig(self, request: ValidateResourceTypeConfig.Request,
+                                   context: Any) -> ValidateResourceTypeConfig.Response:
+        return ValidateResourceTypeConfig.Response()
+
+    def Stop(self, request: Stop.Request, context: Any) -> Stop.Response:
+        if self.server:
+            self.server.stop(0)
+        return super().Stop(request, context)

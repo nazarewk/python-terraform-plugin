@@ -32,6 +32,7 @@ def serve(provider: ProviderBase):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
     tfplugin51_pb2_grpc.add_ProviderServicer_to_server(provider, server)
+    provider.bind(server)
 
     pieces = [
         constants.CoreProtocolVersion,
@@ -56,4 +57,4 @@ def serve(provider: ProviderBase):
         while True:
             time.sleep(constants.ONE_DAY_IN_SECONDS)
     except KeyboardInterrupt:
-        server.stop(0)
+        server.stop(0.2)
