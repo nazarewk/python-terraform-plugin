@@ -8,10 +8,10 @@ from concurrent import futures
 
 import grpc
 
-from terraform_provider import tfplugin51_pb2_grpc
-from terraform_provider.plugin.crypto import get_server_credentials
-from terraform_provider.provider import ProviderBase
-from . import constants
+from terraform_plugin.proto import tfplugin51_pb2_grpc
+from terraform_plugin.crypto import get_server_credentials
+from terraform_plugin.provider import ProviderBase
+from terraform_plugin import constants
 
 log = logging.getLogger(__name__)
 

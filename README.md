@@ -1,4 +1,4 @@
-# python-terraform-provider
+# python-terraform-plugin
 PoC terraform provider library for Python
 
 To run example provider demonstrating capabilities:

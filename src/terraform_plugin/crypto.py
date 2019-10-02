@@ -9,7 +9,7 @@ from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePrivateKeyWithSerialization
 from cryptography.x509 import Certificate, load_der_x509_certificate
 
-from terraform_provider.plugin.constants import PluginCertKey
+from terraform_plugin.constants import PluginCertKey
 
 
 def utcnow():
@@ -89,6 +89,9 @@ def get_server_credentials():
     """
     client_cert_pem = os.getenv(PluginCertKey)
 
+    if not client_cert_pem:
+        return None, b''
+
     private_key, private_key_bytes = generate_private_key()
     certificate = generate_certificate(private_key)
 
@@ -102,6 +105,8 @@ def get_server_credentials():
                 certificate.public_bytes(serialization.Encoding.PEM),
             ),
         ),
+        root_certificates=client_cert_pem,
+        require_client_auth=bool(client_cert_pem),
     )
 
     return credentials, certificate_chain_bytes

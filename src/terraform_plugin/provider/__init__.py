@@ -3,9 +3,14 @@ from typing import Any
 
 from grpc._server import _Server
 
-from terraform_provider.tfplugin51_pb2 import ValidateResourceTypeConfig, Stop
-from .. import tfplugin51_pb2_grpc
-from ..tfplugin51_pb2 import PrepareProviderConfig, Configure, ValidateDataSourceConfig
+from terraform_plugin.proto.tfplugin51_pb2 import (
+    Configure,
+    PrepareProviderConfig,
+    Stop,
+    ValidateDataSourceConfig,
+    ValidateResourceTypeConfig,
+)
+from ..proto import tfplugin51_pb2_grpc
 
 
 class Type(enum.IntEnum):

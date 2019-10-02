@@ -12,7 +12,7 @@ from pkg_resources import parse_requirements, Requirement, DistInfoDistribution
 script_path = Path(__file__).absolute()
 repo_dir = script_path.parent
 src_dir: Path = repo_dir / 'src'
-package_path: Path = src_dir / 'terraform_provider'
+package_path: Path = src_dir / 'terraform_plugin'
 requirements_path: Path = repo_dir / 'requirements-dev.txt'
 env_path: Path = repo_dir / '.venv'
 
@@ -39,6 +39,9 @@ def ensure_virtualenv():
             pip_install_command,
             self_command,
         )
+    elif sys.executable != str(env_path / 'bin' / 'python'):
+        info(f'virtualenv at {env_path} is not active!')
+        sys.exit(1)
     else:
         info(f'virtualenv at {env_path}')
 
@@ -92,13 +95,12 @@ def ensure_protobuf(filename='tfplugin5.1.proto'):
 
     python_out = package_path
     python_out.mkdir(parents=True, exist_ok=True)
-    python_out
 
     output_filename = Path(filename)
     output_filename = (
             output_filename.stem.replace('.', '') + output_filename.suffix
     )
-    proto_path: Path = python_out / output_filename
+    proto_path: Path = python_out / 'proto' / output_filename
     proto_path.write_text('\n'.join([
         f'// downloaded from {url}',
         '',

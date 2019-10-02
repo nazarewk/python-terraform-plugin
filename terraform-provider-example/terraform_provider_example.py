@@ -6,10 +6,17 @@ from typing import Any
 
 import msgpack
 
-from terraform_provider import provider
-from terraform_provider.plugin import server
-from terraform_provider.tfplugin51_pb2 import GetProviderSchema, Schema, ReadDataSource, DynamicValue, \
-    ApplyResourceChange, PlanResourceChange, ReadResource, UpgradeResourceState
+from terraform_plugin import provider, server
+from terraform_plugin.proto.tfplugin51_pb2 import (
+    GetProviderSchema,
+    Schema,
+    ReadDataSource,
+    DynamicValue,
+    ApplyResourceChange,
+    PlanResourceChange,
+    ReadResource,
+    UpgradeResourceState,
+)
 
 log = logging.getLogger(__name__)
 
