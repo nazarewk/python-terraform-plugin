@@ -5,8 +5,8 @@ from pathlib import Path
 import grpc
 from cryptography.hazmat.primitives import serialization
 
-from terraform_plugin.tfplugin51_pb2 import GetProviderSchema
-from terraform_plugin.tfplugin51_pb2_grpc import ProviderStub
+from terraform_plugin.proto.tfplugin51_pb2 import GetProviderSchema
+from terraform_plugin.proto.tfplugin51_pb2_grpc import ProviderStub
 from terraform_plugin import constants, crypto
 
 
