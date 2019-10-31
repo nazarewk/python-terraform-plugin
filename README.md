@@ -9,12 +9,12 @@ To run example provider demonstrating capabilities:
 
 4. Checkout and execute example code:
 
-    git clone https://github.com/nazarewk/python-terraform-provider.git
-    cd python-terraform-provider
-    python3.7 -m dev_init
-    cd terraform-provider-example
-    terraform init
-    terraform apply
+        git clone https://github.com/nazarewk/python-terraform-provider.git
+        cd python-terraform-provider
+        python3.7 -m dev_init
+        cd terraform-provider-example
+        terraform init
+        terraform apply
     
 # TODO
 
