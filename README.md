@@ -15,7 +15,10 @@ To run example provider demonstrating capabilities:
         cd terraform-provider-example
         terraform init
         terraform apply
-    
+
+# Slow performance
+Note this code is very slow (in order of magnitude of 10 seconds per real Terraform operation), because of this i didn't put much more work into it than a simple proof of concept.
+
 # TODO
 
 - [x] `terraform provider schemas -json`
